@@ -28,8 +28,12 @@ export default {
     ],
   },
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        "sans": ["Manrope", "sans-serif"],
+        "Josefin": ["Josefin Sans", "sans-serif"],
+      }
+    },
   },
   plugins: [ require( "daisyui" ) ],
 }
-
