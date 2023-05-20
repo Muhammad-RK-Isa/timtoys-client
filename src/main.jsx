@@ -6,6 +6,8 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AuthProvider from './Providers/AuthProvider/AuthProvider.jsx';
 import { Helmet } from 'react-helmet';
 import Home from './Pages/Home/Home.jsx';
+import { ThemeProvider } from "@material-tailwind/react";
+
 
 const routes = createBrowserRouter( [
   {
@@ -26,6 +28,8 @@ ReactDOM.createRoot( document.getElementById( 'root' ) ).render(
     <Helmet>
       <title>TimToys</title>
     </Helmet>
-    <RouterProvider router={ routes } />
+    <ThemeProvider>
+      <RouterProvider router={ routes } />
+    </ThemeProvider>
   </AuthProvider>,
 );

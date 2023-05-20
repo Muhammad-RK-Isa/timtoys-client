@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: [ "./src/**/*.{jsx, js}" ],
+const withMT = require( "@material-tailwind/react/utils/withMT" );
+
+export default withMT({
+  content: [
+    "./index.html",
+    "./src/**/*.{jsx, js}"
+  ],
+  darkMode: 'class',
   daisyui: {
     themes: [
       {
@@ -30,10 +36,12 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        "sans": ["Manrope", "sans-serif"],
-        "Josefin": ["Josefin Sans", "sans-serif"],
+        "sans": [ "Manrope", "sans-serif" ],
+        "Josefin": [ "Josefin Sans", "sans-serif" ],
       }
     },
   },
-  plugins: [ require( "daisyui" ) ],
-}
+  plugins: [
+    require( "daisyui" )
+  ],
+});

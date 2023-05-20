@@ -4,7 +4,7 @@ import { CgProfile } from 'react-icons/cg';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../Providers/AuthProvider/AuthProvider';
 import { Transition } from '@headlessui/react';
-
+import { RxCross2 } from 'react-icons/rx';
 const Header = () => {
 
     const { user } = useContext( UserContext );
@@ -23,6 +23,18 @@ const Header = () => {
 
     }, [] );
 
+    useEffect( () => {
+        const body = document.querySelector( 'body' );
+        if ( isToggled ) {
+            body.classList.add( 'overflow-hidden' );
+        }
+        else {
+            body.classList.remove( 'overflow-hidden' );
+        }
+    }, [ isToggled ] );
+
+
+
     return (
         <header className='sticky top-0 z-50'>
             <nav className="navbar justify-between md:justify-center md:gap-10 bg-base-100 md:py-4">
@@ -39,15 +51,34 @@ const Header = () => {
                 {/* Drawer for mobile devices */ }
                 <Transition
                     show={ isToggled }
-                    enter="transition-opacity duration-75"
+                    enter="transition-opacity duration-400"
                     enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="transition-opacity duration-150"
-                    leaveFrom="opacity-100"
+                    enterTo="opacity-40"
+                    leave="transition-opacity duration-400"
+                    leaveFrom="opacity-40"
                     leaveTo="opacity-0"
-                    className="fixed "
+                    className="bg-black fixed top-0 left-0 h-screen w-screen "
+                    onClick={ () => setIsToggled( false ) }
+                />
+                <Transition
+                    show={ isToggled }
+                    enter="transition-transform duration-300"
+                    enterFrom="-translate-x-full"
+                    enterTo="translate-x-0"
+                    leave="transition-transform duration-300"
+                    leaveFrom="translate-x-0"
+                    leaveTo="-translate-x-full"
+                    className={ `flex flex-col items-start md:hidden fixed top-0 left-0 h-screen w-7/12 bg-white ${ isToggled && 'overflow-y-auto pointer-events-auto' }` }
                 >
-                    I will fade in and out
+                    <button className="btn lg:hidden sticky top-2 left-2" onClick={ () => setIsToggled( !isToggled ) }>
+                        <RxCross2 size={ 24 } />
+                    </button>
+                    <div className='mt-8 pl-8 flex flex-col gap-3'>
+                        <Link to="/">Home</Link>
+                        <Link to="/all_toys">All Toys</Link>
+                        <Link to="/seller_center">Become a Seller</Link>
+                        <Link to="/blog">Blog</Link>
+                    </div>
                 </Transition>
 
                 {/* Nav Links for >= md */ }
@@ -61,12 +92,17 @@ const Header = () => {
                 </div>
 
                 {/* Seach bar */ }
-                <input
-                    name='search'
-                    type="text"
-                    placeholder="Search"
-                    className="input input-bordered md:w-[30rem] h-10 md:h-12"
-                />
+                <div className='inline-flex gap-2'>
+                    <input
+                        name='search'
+                        type="text"
+                        placeholder="Search"
+                        className="input input-bordered md:w-[30rem] h-10 md:h-12"
+                    />
+                    <button className="btn btn-ghost btn-circle hidden md:inline-flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                    </button>
+                </div>
 
                 {/* User dropdown menu */ }
                 <div className="flex-none gap-2 px-2">
@@ -80,10 +116,10 @@ const Header = () => {
                                 </label>
                                 <ul tabIndex={ 0 } className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                                     <li>
-                                        <a className="justify-between">
+                                        <Link to={ `/user/profile/${ user?._id }` } className="justify-between">
                                             Profile
                                             <span className="badge">New</span>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li><a>Settings</a></li>
                                     <li><a>Logout</a></li>
