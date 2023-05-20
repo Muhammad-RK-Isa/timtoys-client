@@ -3,8 +3,10 @@ import Slider from './Slider';
 
 const Home = () => {
     return (
-        <section>
-            <Slider />
+        <section className='grid md:grid-cols-5'>
+            <div className='col-start-2 col-span-3'>
+                <Slider />
+            </div>
         </section>
     );
 };

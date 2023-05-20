@@ -4,7 +4,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
 const Slider = () => {
     return (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:max-w-5xl lg:max-w-6xl mx-4 md:mx-auto my-4 lg:my-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:max-w-5xl mx-4 md:mx-auto my-4 lg:my-6">
 
             <Carousel
                 className="rounded-xl"
