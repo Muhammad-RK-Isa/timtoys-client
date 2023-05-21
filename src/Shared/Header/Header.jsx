@@ -49,10 +49,10 @@ const Header = () => {
                     leaveTo="-translate-x-full"
                     className="navbar-center flex flex-col gap-4 fixed left-2 top-20 bg-white border rounded-lg drop-shadow-lg"
                 >
-                    <Link className='px-3 py-1 text-left w-full' to="/">Home</Link>
-                    <Link className='px-3 py-1 text-left w-full' to="/all_toys">All Toys</Link>
-                    <Link className='px-3 py-1 text-left w-full' to="/seller_center">Become a Seller</Link>
-                    <Link className='px-3 py-1 text-left w-full' to="/blog">Blog</Link>
+                    <Link className='px-3 py-1 text-left w-full' onClick={() => setIsToggled(false)} to="/">Home</Link>
+                    <Link className='px-3 py-1 text-left w-full' onClick={() => setIsToggled(false)} to="/all_toys">All Toys</Link>
+                    <Link className='px-3 py-1 text-left w-full' onClick={() => setIsToggled(false)} to="/seller_center">Become a Seller</Link>
+                    <Link className='px-3 py-1 text-left w-full' onClick={() => setIsToggled(false)} to="/blog">Blog</Link>
                 </Transition>
 
                 {/* Nav Links for >= md */ }

@@ -8,6 +8,8 @@ import AuthProvider from './Providers/AuthProvider/AuthProvider.jsx';
 import { Helmet } from 'react-helmet';
 import Home from './Pages/Home/Home.jsx';
 import { ThemeProvider } from "@material-tailwind/react";
+import Login from './Pages/Login/Login.jsx';
+import SignUp from './Pages/SignUp/SignUp.jsx';
 
 
 const routes = createBrowserRouter( [
@@ -18,6 +20,14 @@ const routes = createBrowserRouter( [
       {
         index: true,
         element: <Home />
+      },
+      {
+        path: '/login',
+        element: <Login/>
+      },
+      {
+        path: '/signup',
+        element: <SignUp/>
       }
     ]
   }
