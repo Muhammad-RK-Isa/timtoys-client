@@ -1,9 +1,12 @@
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { Carousel, IconButton } from "@material-tailwind/react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../Providers/AuthProvider/AuthProvider";
 
 const Slider = () => {
+
+    const { setCategory } = useContext( UserContext );
 
     const [ dataSet1, setDataSet1 ] = useState( null );
     const [ dataSet2, setDataSet2 ] = useState( null );
@@ -61,7 +64,10 @@ const Slider = () => {
                             } )
                         }
                     </Carousel>
-                    <button className="absolute top-2 left-2 md:left-3 md:top-3 text-white font-bold bg-accent bg-opacity-40 p-2 rounded ">
+                    <button
+                        className="absolute top-2 left-2 md:left-3 md:top-3 text-white font-bold bg-accent bg-opacity-40 p-2 rounded"
+                        onClick={ () => {setCategory( dataSet1[ 0 ].category )}}
+                    >
                         { dataSet1[ 0 ].category }
                     </button>
                 </div>
@@ -97,7 +103,10 @@ const Slider = () => {
                             } )
                         }
                     </Carousel>
-                    <button className="absolute top-2 left-2 md:left-3 md:top-3 text-white font-bold bg-accent bg-opacity-40 p-2 rounded ">
+                    <button
+                        className="absolute top-2 left-2 md:left-3 md:top-3 text-white font-bold bg-accent bg-opacity-40 p-2 rounded"
+                        onClick={ () => {setCategory( dataSet2[ 0 ].category )}}
+                    >
                         { dataSet2[ 0 ].category }
                     </button>
                 </div>
@@ -133,7 +142,10 @@ const Slider = () => {
                             } )
                         }
                     </Carousel>
-                    <button className="absolute top-2 left-2 md:left-3 md:top-3 text-white font-bold bg-accent bg-opacity-40 p-2 rounded ">
+                    <button
+                        className="absolute top-2 left-2 md:left-3 md:top-3 text-white font-bold bg-accent bg-opacity-40 p-2 rounded"
+                        onClick={ () => {setCategory( dataSet3[ 0 ].category )}}
+                    >
                         { dataSet3[ 0 ].category }
                     </button>
                 </div>
