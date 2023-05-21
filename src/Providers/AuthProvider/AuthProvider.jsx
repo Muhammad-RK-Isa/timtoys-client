@@ -49,8 +49,18 @@ const AuthProvider = ( { children } ) => {
     // ! Products Contexts and stuffs
     const [ products, setProducts ] = useState( null );
     const [ category, setCategory ] = useState( null );
+    const [ categories, setCategories ] = useState( null );
     const [ subCategories, setSubCategories ] = useState( [] );
 
+    const requestCategories = async ( category ) => {
+        try {
+            const response = await fetch( `http://192.168.0.179:5000/categories` );
+            const data = await response.json();
+            setCategories( data );
+        } catch ( error ) {
+            console.log( error );
+        }
+    };
     const requestSubCategories = async ( category ) => {
         try {
             const response = await fetch( `http://192.168.0.179:5000/sub_categories?category=${ encodeURIComponent( category ) }` );
@@ -72,6 +82,7 @@ const AuthProvider = ( { children } ) => {
     };
 
     useEffect( () => {
+        requestCategories();
         requestSubCategories( category );
         requestProductsByCategory( category );
     }, [ category ] );
@@ -94,7 +105,8 @@ const AuthProvider = ( { children } ) => {
         products,
         subCategories,
         category,
-        setCategory
+        setCategory,
+        categories
     };
 
     useEffect( () => {

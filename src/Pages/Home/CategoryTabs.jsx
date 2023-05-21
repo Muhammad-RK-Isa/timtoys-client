@@ -8,6 +8,7 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../Providers/AuthProvider/AuthProvider";
 import { Link } from "react-router-dom";
+import { BiRightArrowAlt } from "react-icons/bi";
 
 const CategoryTabs = () => {
 
@@ -17,11 +18,13 @@ const CategoryTabs = () => {
         setCategory( 'Novelty & Gag Toys' );
     }, [] );
 
+
+
     if ( products && subCategories.length !== 0 ) {
         return (
-            <div className="hidden md:block">
+            <div>
                 <Tabs value={ subCategories[ 0 ] }>
-                    <TabsHeader>
+                    <TabsHeader className="grid grid-cols-2 md:flex">
                         { subCategories.map( ( subCategory ) => (
                             <Tab key={ subCategory } value={ subCategory }>
                                 { subCategory }
@@ -34,25 +37,32 @@ const CategoryTabs = () => {
                             mount: { y: 0 },
                             unmount: { y: 250 },
                         } }
-                        className="grid grid-cols-2 gap-4 h-screen overflow-scroll overflow-x-hidden"
+                        className="grid grid-cols-2 md:grid-cols-3 gap-2 pr-8"
                     >
                         {
-                            products.map( ( { subCategory, title, thumbnailImage, price, _id } ) => (
+                            products.map( ( { subCategory, title, thumbnailImage, price, listPrice, _id } ) => (
                                 <TabPanel key={ title } value={ subCategory }>
-                                    <div className="card card-compact h-96 w-96 bg-base-100 shadow-sm border rounded-md">
+                                    <Link to={ `/product/${ _id }` } className="card card-compact w-44 h-52 md:h-72 md:w-72 mx-auto md:mx-0 bg-base-100 shadow-sm border rounded-md">
                                         <figure>
                                             <img src={ thumbnailImage } alt="Shoes" />
                                         </figure>
                                         <div className="card-body">
-                                            <h2 className="card-title text-base line-clamp-3">{ title }</h2>
+                                            <h2 className="card-title text-base line-clamp-2 md:line-clamp-3">{ title }</h2>
                                             <div className="flex items-center justify-between">
-                                                <p className="font-bold text-2xl">{ `$` + price.value }</p>
-                                                <Link to={ `/product/${ _id }` }>
-                                                    <button className="btn btn-primary">Buy Now</button>
-                                                </Link>
+                                                <div className="flex items-center justify-between md:justify-normal gap-2 w-full md:w-max">
+                                                    <p className="font-bold text-xl md:text-2xl">{ `$` + price.value }</p>
+                                                    {
+                                                        listPrice?.value &&
+                                                        <p className="font-bold text link-error line-through">{ `$` + listPrice.value }</p>
+                                                    }
+                                                </div>
+                                                <button className="btn btn-xs btn-primary gap-2 rounded-md hidden md:inline-flex">
+                                                    More Info
+                                                    <BiRightArrowAlt />
+                                                </button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </TabPanel>
                             ) ) }
                     </TabsBody>

@@ -41,9 +41,9 @@ const Slider = () => {
                                 color="white"
                                 size="lg"
                                 onClick={ handlePrev }
-                                className="!absolute top-2/4 -translate-y-2/4 left-4 bg-accent bg-opacity-25"
+                                className="!absolute top-2/4 -translate-y-2/4 left-4"
                             >
-                                <ArrowLeftIcon strokeWidth={ 2 } className="w-6 h-6 hover:text-accent flex" />
+                                <ArrowLeftIcon strokeWidth={ 2 } className="w-6 h-6 flex" />
                             </IconButton>
                         ) }
                         nextArrow={ ( { handleNext } ) => (
@@ -52,9 +52,9 @@ const Slider = () => {
                                 color="white"
                                 size="lg"
                                 onClick={ handleNext }
-                                className="!absolute top-2/4 -translate-y-2/4 !right-4  bg-accent bg-opacity-25"
+                                className="!absolute top-2/4 -translate-y-2/4 !right-4"
                             >
-                                <ArrowRightIcon strokeWidth={ 2 } className="w-6 h-6 hover:text-accent flex" />
+                                <ArrowRightIcon strokeWidth={ 2 } className="w-6 h-6 flex" />
                             </IconButton>
                         ) }
                     >
@@ -66,7 +66,7 @@ const Slider = () => {
                     </Carousel>
                     <button
                         className="absolute top-2 left-2 md:left-3 md:top-3 text-white font-bold bg-accent bg-opacity-40 p-2 rounded"
-                        onClick={ () => {setCategory( dataSet1[ 0 ].category )}}
+                        onClick={ () => { setCategory( dataSet1[ 0 ].category ); } }
                     >
                         { dataSet1[ 0 ].category }
                     </button>
@@ -80,9 +80,9 @@ const Slider = () => {
                                 color="white"
                                 size="lg"
                                 onClick={ handlePrev }
-                                className="!absolute top-2/4 -translate-y-2/4 left-4 bg-accent bg-opacity-25"
+                                className="!absolute top-2/4 -translate-y-2/4 left-4 "
                             >
-                                <ArrowLeftIcon strokeWidth={ 2 } className="w-6 h-6 hover:text-accent flex" />
+                                <ArrowLeftIcon strokeWidth={ 2 } className="w-6 h-6 flex" />
                             </IconButton>
                         ) }
                         nextArrow={ ( { handleNext } ) => (
@@ -91,9 +91,9 @@ const Slider = () => {
                                 color="white"
                                 size="lg"
                                 onClick={ handleNext }
-                                className="!absolute top-2/4 -translate-y-2/4 !right-4  bg-accent bg-opacity-25"
+                                className="!absolute top-2/4 -translate-y-2/4 !right-4"
                             >
-                                <ArrowRightIcon strokeWidth={ 2 } className="w-6 h-6 hover:text-accent flex" />
+                                <ArrowRightIcon strokeWidth={ 2 } className="w-6 h-6 flex" />
                             </IconButton>
                         ) }
                     >
@@ -105,7 +105,7 @@ const Slider = () => {
                     </Carousel>
                     <button
                         className="absolute top-2 left-2 md:left-3 md:top-3 text-white font-bold bg-accent bg-opacity-40 p-2 rounded"
-                        onClick={ () => {setCategory( dataSet2[ 0 ].category )}}
+                        onClick={ () => { setCategory( dataSet2[ 0 ].category ); } }
                     >
                         { dataSet2[ 0 ].category }
                     </button>
@@ -119,9 +119,9 @@ const Slider = () => {
                                 color="white"
                                 size="lg"
                                 onClick={ handlePrev }
-                                className="!absolute top-2/4 -translate-y-2/4 left-4 bg-accent bg-opacity-25"
+                                className="!absolute top-2/4 -translate-y-2/4 left-4 bg-white bg-opacity-25"
                             >
-                                <ArrowLeftIcon strokeWidth={ 2 } className="w-6 h-6 hover:text-accent flex" />
+                                <ArrowLeftIcon strokeWidth={ 2 } className="w-6 h-6 flex" />
                             </IconButton>
                         ) }
                         nextArrow={ ( { handleNext } ) => (
@@ -130,9 +130,9 @@ const Slider = () => {
                                 color="white"
                                 size="lg"
                                 onClick={ handleNext }
-                                className="!absolute top-2/4 -translate-y-2/4 !right-4  bg-accent bg-opacity-25"
+                                className="!absolute top-2/4 -translate-y-2/4 !right-4"
                             >
-                                <ArrowRightIcon strokeWidth={ 2 } className="w-6 h-6 hover:text-accent flex" />
+                                <ArrowRightIcon strokeWidth={ 2 } className="w-6 h-6 flex" />
                             </IconButton>
                         ) }
                     >
@@ -144,7 +144,7 @@ const Slider = () => {
                     </Carousel>
                     <button
                         className="absolute top-2 left-2 md:left-3 md:top-3 text-white font-bold bg-accent bg-opacity-40 p-2 rounded"
-                        onClick={ () => {setCategory( dataSet3[ 0 ].category )}}
+                        onClick={ () => { setCategory( dataSet3[ 0 ].category ); } }
                     >
                         { dataSet3[ 0 ].category }
                     </button>
