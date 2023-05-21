@@ -1,15 +1,15 @@
+import {
+    GithubAuthProvider,
+    GoogleAuthProvider,
+    createUserWithEmailAndPassword,
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    signOut
+} from 'firebase/auth';
 import { createContext, useEffect, useState } from 'react';
 import { app } from '../../Firebase/firebase.config';
-import {
-    GoogleAuthProvider,
-    GithubAuthProvider,
-    signInWithPopup,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-    getAuth,
-    onAuthStateChanged
-} from 'firebase/auth';
 
 export const UserContext = createContext();
 const AuthProvider = ( { children } ) => {
@@ -54,7 +54,7 @@ const AuthProvider = ( { children } ) => {
 
     const requestCategories = async ( category ) => {
         try {
-            const response = await fetch( `http://192.168.0.179:5000/categories` );
+            const response = await fetch( `https://tim-toys-server.vercel.app/categories` );
             const data = await response.json();
             setCategories( data );
         } catch ( error ) {
@@ -63,7 +63,7 @@ const AuthProvider = ( { children } ) => {
     };
     const requestSubCategories = async ( category ) => {
         try {
-            const response = await fetch( `http://192.168.0.179:5000/sub_categories?category=${ encodeURIComponent( category ) }` );
+            const response = await fetch( `https://tim-toys-server.vercel.app/sub_categories?category=${ encodeURIComponent( category ) }` );
             const data = await response.json();
             setSubCategories( data );
         } catch ( error ) {
@@ -73,7 +73,7 @@ const AuthProvider = ( { children } ) => {
 
     const requestProductsByCategory = async ( category ) => {
         try {
-            const response = await fetch( `http://192.168.0.179:5000/products/filter_by_category?category=${ encodeURIComponent( category ) }` );
+            const response = await fetch( `https://tim-toys-server.vercel.app/products/filter_by_category?category=${ encodeURIComponent( category ) }` );
             const data = await response.json();
             setProducts( data );
         } catch ( error ) {

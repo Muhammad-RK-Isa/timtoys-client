@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../../Providers/AuthProvider/AuthProvider';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { ScaleLoader } from 'react-spinners';
 
 

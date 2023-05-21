@@ -14,8 +14,6 @@ const Login = () => {
     const previousLocation = location.state?.from?.pathname || '/';
 
     const navigateToPreviousLocation = () => {
-        setActiveLink( `${ previousLocation }` );
-        console.log( previousLocation );
         navigate( previousLocation, { replace: true } );
     };
 

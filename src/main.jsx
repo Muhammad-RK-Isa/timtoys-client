@@ -1,18 +1,18 @@
+import { ThemeProvider } from "@material-tailwind/react";
 import React, { Children } from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
-import './index.css';
-import './Scrollbar.css';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import AuthProvider from './Providers/AuthProvider/AuthProvider.jsx';
 import { Helmet } from 'react-helmet';
-import Home from './Pages/Home/Home.jsx';
-import { ThemeProvider } from "@material-tailwind/react";
-import Login from './Pages/Login/Login.jsx';
-import SignUp from './Pages/SignUp/SignUp.jsx';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import App from './App.jsx';
 import Error from './Pages/Error/Error.jsx';
-import RestrictedRoute from './Routes/RestrictedRoute/RestrictedRoute.jsx';
+import Home from './Pages/Home/Home.jsx';
+import Login from './Pages/Login/Login.jsx';
 import ProductDetails from './Pages/ProductDetails/ProductDetails.jsx';
+import SignUp from './Pages/SignUp/SignUp.jsx';
+import AuthProvider from './Providers/AuthProvider/AuthProvider.jsx';
+import RestrictedRoute from './Routes/RestrictedRoute/RestrictedRoute.jsx';
+import './Scrollbar.css';
+import './index.css';
 
 
 const routes = createBrowserRouter( [
@@ -35,7 +35,7 @@ const routes = createBrowserRouter( [
       {
         path: '/product/:_id',
         element: <RestrictedRoute><ProductDetails /></RestrictedRoute>,
-        loader: ({params}) => fetch(`http://192.168.0.179:5000/product/${params._id}`)
+        loader: ( { params } ) => fetch( `https://tim-toys-server.vercel.app/product/${ params._id }` )
       },
       {
         path: '*',

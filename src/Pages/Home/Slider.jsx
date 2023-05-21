@@ -1,7 +1,7 @@
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-import { Carousel, IconButton } from "@material-tailwind/react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { Carousel, IconButton } from "@material-tailwind/react";
 import { useContext, useEffect, useState } from "react";
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { UserContext } from "../../Providers/AuthProvider/AuthProvider";
 
 const Slider = () => {
@@ -15,7 +15,7 @@ const Slider = () => {
     useEffect( () => {
         const requestdata = async ( category, dataSet ) => {
             try {
-                const response = await fetch( `http://192.168.0.179:5000/products/random?quantity=3&category=${ encodeURIComponent( category ) }` );
+                const response = await fetch( `https://tim-toys-server.vercel.app/products/random?quantity=3&category=${ encodeURIComponent( category ) }` );
                 const data = await response.json();
                 dataSet( data );
             } catch ( error ) {

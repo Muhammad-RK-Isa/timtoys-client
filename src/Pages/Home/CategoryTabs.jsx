@@ -4,6 +4,7 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { UserContext } from "../../Providers/AuthProvider/AuthProvider";
 import { Link } from "react-router-dom";
 import { BiRightArrowAlt } from "react-icons/bi";
+import { Toaster, toast } from "react-hot-toast";
 
 const CategoryTabs = () => {
 
@@ -15,10 +16,13 @@ const CategoryTabs = () => {
         setSelected( 'Novelty & Gag Toys' );
     }, [] );
 
-    useEffect(() => {
+    useEffect( () => {
         setCategory( selected );
-    }, [selected])
-    
+    }, [ selected ] );
+
+    const showToast = () => {
+        toast.warning( 'You have to login first!' );
+    };
 
     function classNames ( ...classes ) {
         return classes.filter( Boolean ).join( ' ' );
@@ -78,6 +82,7 @@ const CategoryTabs = () => {
                         </div>
                     </Listbox>
                 </div>
+                <button className="btn btn-accent" onClick={showToast}>show toast</button>
 
                 <div className="w-full px-2 pt-4 pb-16 sm:px-0 z-0">
                     <Tab.Group>
@@ -111,7 +116,7 @@ const CategoryTabs = () => {
                                             products.map( ( { subCategory, title, thumbnailImage, price, listPrice, _id } ) => {
                                                 if ( subCat === subCategory ) {
                                                     return (
-                                                        <Link key={ _id } to={ `/product/${ _id }` } className="card card-compact w-44 h-52 md:h-72 md:w-72 mx-auto md:mx-0 bg-base-100 shadow-sm border rounded-md">
+                                                        <Link onClick={ showToast } key={ _id } to={ `/product/${ _id }` } className="card card-compact w-44 h-52 md:h-72 md:w-72 mx-auto md:mx-0 bg-base-100 shadow-sm border rounded-md">
                                                             <figure className="z-0">
                                                                 <img src={ thumbnailImage } alt="Shoes" />
                                                             </figure>
