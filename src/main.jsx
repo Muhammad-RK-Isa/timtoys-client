@@ -10,6 +10,9 @@ import Home from './Pages/Home/Home.jsx';
 import { ThemeProvider } from "@material-tailwind/react";
 import Login from './Pages/Login/Login.jsx';
 import SignUp from './Pages/SignUp/SignUp.jsx';
+import Error from './Pages/Error/Error.jsx';
+import RestrictedRoute from './Routes/RestrictedRoute/RestrictedRoute.jsx';
+import ProductDetails from './Pages/ProductDetails/ProductDetails.jsx';
 
 
 const routes = createBrowserRouter( [
@@ -23,11 +26,20 @@ const routes = createBrowserRouter( [
       },
       {
         path: '/login',
-        element: <Login/>
+        element: <Login />
       },
       {
         path: '/signup',
-        element: <SignUp/>
+        element: <SignUp />
+      },
+      {
+        path: '/product/:_id',
+        element: <RestrictedRoute><ProductDetails /></RestrictedRoute>,
+        loader: ({params}) => fetch(`http://192.168.0.179:5000/product/${params._id}`)
+      },
+      {
+        path: '*',
+        element: <Error />
       }
     ]
   }

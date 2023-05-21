@@ -2,33 +2,56 @@ import React, { useContext } from 'react';
 import HeroImg from '../../assets/login-splash.svg';
 import { FcGoogle } from "react-icons/fc";
 import { VscGithub } from "react-icons/vsc";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from './../../Providers/AuthProvider/AuthProvider';
 
 const Login = () => {
 
     const { signIn, signInWithGoogle, signInWithGithub } = useContext( UserContext );
 
-    const handleSignIn = e => {
-        e.preventDefault();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const previousLocation = location.state?.from?.pathname || '/';
+
+    const navigateToPreviousLocation = () => {
+        setActiveLink( `${ previousLocation }` );
+        console.log( previousLocation );
+        navigate( previousLocation, { replace: true } );
+    };
+
+    const handleSignIn = ( e ) => {
+        eveent.preventDefault();
 
         const email = e.target.email.value;
         const password = e.target.password.value;
 
         signIn( email, password )
-            .then( result => console.log( result ) )
-            .catch( error => console.log( error ) );
+            .then( result => {
+                console.log( result );
+                navigateToPreviousLocation();
+            } )
+            .catch( error => {
+                setErrorMsg( error.message );
+                console.log( error );
+                setLoading( false );
+            } );
     };
 
     const handleGoogleSignIn = () => {
         signInWithGoogle()
-            .then( result => console.log( result ) )
+            .then( result => {
+                console.log( result );
+                navigateToPreviousLocation();
+            } )
             .catch( error => console.log( error ) );
     };
 
     const handleGithubSignIn = () => {
         signInWithGithub()
-            .then( result => console.log( result ) )
+            .then( result => {
+                console.log( result );
+                navigateToPreviousLocation();
+            } )
             .catch( error => console.log( error ) );
     };
 
@@ -67,9 +90,6 @@ const Login = () => {
                                     className="input input-bordered"
                                     required
                                 />
-                                {/* <label className="label">
-                                <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                            </label> */}
                             </div>
 
                             <div className="form-control mt-6">
