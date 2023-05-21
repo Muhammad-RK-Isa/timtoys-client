@@ -106,7 +106,7 @@ const AuthProvider = ( { children } ) => {
         subCategories,
         category,
         setCategory,
-        categories
+        categories,
     };
 
     useEffect( () => {
