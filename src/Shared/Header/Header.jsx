@@ -1,110 +1,105 @@
 import { Link } from 'react-router-dom';
-import logo from '../../assets/svg/logo-icon.svg';
+import logo from '../../assets/svg/logo-transparent.svg';
 import { CgProfile } from 'react-icons/cg';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { UserContext } from '../../Providers/AuthProvider/AuthProvider';
-import { Transition } from '@headlessui/react';
-
+import { Popover, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import { Button, Avatar } from '@material-tailwind/react';
+import Swal from 'sweetalert2';
 
 const Header = () => {
-
-    const { user, drawerClosed, setDrawerClosed } = useContext( UserContext );
-    const [ isToggled, setIsToggled ] = useState( false );
-
-    useEffect( () => {
-        window.addEventListener( 'scroll', () => {
-            const scrollY = window.scrollY;
-            if ( scrollY > 20 ) {
-                document.querySelector( 'header' ).classList.add( 'drop-shadow-lg' );
-            }
-            else {
-                document.querySelector( 'header' ).classList.remove( 'drop-shadow-lg' );
-            }
+    const { user, logOut, isToggled, setIsToggled, openLoginPopUp, setOpenLoginPopUp, setActiveLink } = useContext( UserContext );
+    
+    const handleLogOut = () => {
+        Swal.fire( {
+            title: 'Are you sure you want to logout?',
+            text: "You will be restricted to homeplage only!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Logout',
+            buttonsStyling: false,
+            customClass: {
+                confirmButton: 'btn btn-error text-white rounded mr-2',
+                cancelButton: 'btn btn-ghost rounded',
+            },
+        } ).then( ( result ) => {
+            if ( result.isConfirmed ) {
+                logOut();
+                localStorage.removeItem( 'jwt-access-token' );
+            };
         } );
-
-    }, [] );
-
+    };
 
     return (
-        <header className='fixed w-full top-0 z-50'>
-            <nav className="navbar justify-between md:justify-center md:gap-10 bg-base-100 md:py-4">
-                {/* Logo  */ }
-                <Link className="hidden md:block">
-                    <img src={ logo } alt="logo" className='w-12 h-12' />
-                </Link>
-
-                {/* Dropdown menu for mobile devices */ }
-                <button className='btn lg:hidden' onClick={ () => setIsToggled( !isToggled  ) }>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-                </button>
-
-                {/* Nav Links for < md */ }
-                <Transition
-                    show={ isToggled }
-                    enter="transition-opacity duration-300"
-                    enterFrom="-translate-x-full"
-                    enterTo="translate-x-0"
-                    leave="transition-transform duration-300"
-                    leaveFrom="translate-x-0"
-                    leaveTo="-translate-x-full"
-                    className="navbar-center flex flex-col gap-4 fixed left-2 top-20 bg-white border rounded-lg drop-shadow-lg"
-                >
-                    <Link className='px-3 py-1 text-left w-full' onClick={() => setIsToggled(false)} to="/">Home</Link>
-                    <Link className='px-3 py-1 text-left w-full' onClick={() => setIsToggled(false)} to="/all_toys">All Toys</Link>
-                    <Link className='px-3 py-1 text-left w-full' onClick={() => setIsToggled(false)} to="/seller_center">Become a Seller</Link>
-                    <Link className='px-3 py-1 text-left w-full' onClick={() => setIsToggled(false)} to="/blog">Blog</Link>
-                </Transition>
-
-                {/* Nav Links for >= md */ }
-                <div className="navbar-center hidden lg:flex">
-                    <div className="menu menu-horizontal px-1 gap-8">
-                        <Link to="/">Home</Link>
-                        <Link to="/all_toys">All Toys</Link>
-                        <Link to="/seller_center">Become a Seller</Link>
-                        <Link to="/blog">Blog</Link>
-                    </div>
-                </div>
-
-
-                {/* Seach bar */ }
-                <div className='inline-flex gap-2'>
-                    <input
-                        name='search'
-                        type="text"
-                        placeholder="Search"
-                        className="input input-bordered md:w-[30rem] h-10 md:h-12"
-                    />
-                    <button className="btn btn-ghost btn-circle hidden md:inline-flex">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+        <header className={ `fixed w-full top-0 z-[200] ${ isToggled && 'filter blur-sm transition-all duration-200' }` }>
+            <nav className='w-full font-Josefin uppercase bg-base-100'>
+                <div className="navbar justify-between md:justify-center md:gap-10 md:py-4 w-full max-w-screen-2xl mx-auto">
+                    {/* Dropdown menu for mobile devices - on the left hand side */ }
+                    <button className='btn btn-ghost lg:hidden' onClick={ () => setIsToggled( true ) }>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                     </button>
-                </div>
 
-                {/* User dropdown menu */ }
-                <div className="flex-none gap-2 px-2">
-                    {
-                        user ?
-                            <div className="dropdown dropdown-end">
-                                <label tabIndex={ 0 } className="btn btn-ghost btn-circle avatar">
-                                    <div className="w-10 rounded-full">
-                                        <CgProfile size={ 40 } />
-                                    </div>
-                                </label>
-                                <ul tabIndex={ 0 } className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
-                                    <li>
-                                        <Link to={ `/user/profile/${ user?._id }` } className="justify-between">
-                                            Profile
-                                            <span className="badge">New</span>
-                                        </Link>
-                                    </li>
-                                    <li><a>Settings</a></li>
-                                    <li><a>Logout</a></li>
-                                </ul>
-                            </div>
-                            :
-                            <Link to='/login'>Login</Link>
-                    }
-                </div>
+                    {/*Left side nav links for >= md */ }
+                    <div className="navbar-center hidden lg:flex">
+                        <div className="menu menu-horizontal gap-10">
+                            <Link className='hover:text-opacity-40 hover:text-accent duration-150' onClick={() => setActiveLink('Home')} to="/">Home</Link>
+                            <Link className='hover:text-opacity-40 hover:text-accent duration-150' onClick={ () => setActiveLink('All Products')} to="/products/all">All Toys</Link>
+                            <Link className='hover:text-opacity-40 hover:text-accent duration-150' onClick={() => setActiveLink('Blog')} to="/blog">Blog</Link>
+                        </div>
+                    </div>
+                    {/* Sand| Logo |wich */ }
+                    <Link className="mx-auto">
+                        <img src={ logo } alt="logo" className='w-max h-8 lg:h-12' />
+                    </Link>
+                    {/*Right side nav links for >= md */ }
+                    <div className="navbar-center hidden lg:flex">
+                        <div className="menu menu-horizontal gap-10">
+                            <Link className='hover:text-opacity-40 hover:text-accent duration-150' onClick={() => setActiveLink('Add a Toy')} to="/user/products/add_product">Add a Toy</Link>
+                            <Link className='hover:text-opacity-40 hover:text-accent duration-150' onClick={ () => setActiveLink( 'My Toys' ) } to={ `/user/products/inventory` }>My Toys</Link>
+                        </div>
+                    </div>
 
+                    {/* Profile Menu Popover */ }
+                    <Popover className="relative">
+                        { () => (
+                            <>
+                                {
+                                    user ?
+                                        <Popover.Button
+                                            className="outline-none focus:outline-none rounded-full"
+                                        >
+                                            {
+                                                user.photoURL ?
+                                                    <Avatar src={ user?.photoURL } alt="avatar" withBorder={ true } className="p-0.5 w-9 h-9 border-primary" />
+                                                    :
+                                                    <CgProfile size={ 36 } />
+                                            }
+                                        </Popover.Button>
+                                        :
+                                        <button onClick={ () => setOpenLoginPopUp( !openLoginPopUp ) } className='uppercase hover:text-opacity-40 hover:text-accent duration-150'>Login</button>
+                                }
+                                <Transition
+                                    as={ Fragment }
+                                    enter="transition ease-out duration-200"
+                                    enterFrom="opacity-0 translate-y-1"
+                                    enterTo="opacity-100 translate-y-0"
+                                    leave="transition ease-in duration-150"
+                                    leaveFrom="opacity-100 translate-y-0"
+                                    leaveTo="opacity-0 translate-y-1"
+                                >
+                                    <Popover.Panel className="absolute right-0 top-10 z-10 mt-3 w-64">
+                                        <div className="overflow-hidden flex flex-col gap-2 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-neutral p-4 text-base-100 font-sans">
+                                            <h3 className='capitalize'>{ user?.displayName }</h3>
+                                            <h3 className='lowercase'>{ user?.email }</h3>
+                                            <Button size={ 'sm' } onClick={ handleLogOut } color="red" className='rounded'>Log out</Button>
+                                        </div>
+                                    </Popover.Panel>
+                                </Transition>
+                            </>
+                        ) }
+                    </Popover>
+                </div>
             </nav>
         </header>
     );

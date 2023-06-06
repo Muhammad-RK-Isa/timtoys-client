@@ -1,0 +1,18 @@
+[
+    {
+        "question": "What is an access token and refresh token?",
+        "answer": "Access token and refresh token are credentials used in authentication and authorization systems. An access token represents the authorization granted to a client to access protected resources. It is a string value that contains information about the client's permissions and other relevant details. On the other hand, a refresh token is used to obtain a new access token when the current one expires. It is typically a long-lived token with a longer expiration time. Refresh tokens provide a way to extend the validity of access tokens without requiring the client to re-authenticate with the server each time the token expires."
+    },
+    {
+        "question": "How do access tokens and refresh tokens work? Where should we store them on the client-side?",
+        "answer": "When a client authenticates with a server, an access token is issued, which the client includes in each request to access protected resources. The server validates the access token to ensure the client has the necessary permissions. When the access token expires, the client can use the refresh token to request a new access token without re-authenticating. This process is known as token-based authentication or OAuth. It improves security by limiting the exposure of credentials, as the client only needs to store and present the access token. Access tokens are typically stored in memory or short-term storage like browser's localStorage. However, it's crucial to ensure the storage mechanism is secure and protected against cross-site scripting (XSS) attacks. Refresh tokens, being long-lived and more sensitive, should be stored securely in localStorage or secure HTTP-only cookies to prevent unauthorized access."
+    },
+    {
+        "question": "A comparison between SQL & NoSQL databases.",
+        "answer": "SQL databases are based on a structured data model, enforce predefined schemas, and use SQL (Structured Query Language) as the query language. They provide strong data integrity and consistency through the enforcement of schemas and relationships between tables. SQL databases are suitable for structured data and complex transactions, where data needs to adhere to a strict schema. On the other hand, NoSQL databases offer flexibility in data modeling, supporting various data models such as document, key-value, columnar, or graph. They provide schema flexibility, allowing dynamic and evolving data structures without predefined schemas. NoSQL databases prioritize scalability and availability over strict consistency, making them suitable for handling unstructured or rapidly evolving data. They excel at horizontal scalability by distributing data across multiple nodes or clusters, enabling high performance and scalability."
+    },
+    {
+        "question": "What is MongoDB aggregate and how does it work?",
+        "answer": "MongoDB aggregate is an operation used for advanced data processing and analysis in MongoDB. It allows performing complex data transformations, aggregations, filtering, sorting, and more. The aggregate operation works by processing data through a pipeline, which consists of multiple stages. Each stage represents a specific operation on the data and passes the results to the next stage. The pipeline stages are processed sequentially, allowing you to build a series of transformations on the data. Common stages include `$match` for filtering documents, `$group` for grouping and aggregating data, `$sort` for sorting, `$project` for reshaping documents, and many more. By specifying stages in the desired order, you can perform various operations and extract meaningful insights from the data stored in a MongoDB collection."
+    }
+]

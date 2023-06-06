@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 const withMT = require( "@material-tailwind/react/utils/withMT" );
 
-export default withMT({
+export default withMT( {
   content: [
     "./index.html",
     "./src/**/*.{jsx, js}"
@@ -12,23 +12,23 @@ export default withMT({
       {
         mytheme: {
 
-          "primary": "#824f40",
+          "primary": "#bfd3bb",
 
-          "secondary": "#ffffff",
+          "secondary": "#141c12",
 
-          "accent": "#3e261e",
+          "accent": "#b0c9ac",
 
-          "neutral": "#eef5f7",
+          "neutral": "#ffffff",
 
-          "base-100": "#FFFFFF",
+          "base-100": "#090c08",
 
-          "info": "#3ABFF8",
+          "info": "#79DBF1",
 
-          "success": "#36D399",
+          "success": "#1B7963",
 
-          "warning": "#FBBD23",
+          "warning": "#F3DD6D",
 
-          "error": "#F87272",
+          "error": "#F5666D",
         },
       },
     ],
@@ -39,10 +39,10 @@ export default withMT({
         "sans": [ "Manrope", "sans-serif" ],
         "Josefin": [ "Josefin Sans", "sans-serif" ],
       }
-    },
+    }
   },
   plugins: [
     require( "@tailwindcss/line-clamp" ),
     require( "daisyui" )
   ],
-});
+} );

@@ -1,9 +1,12 @@
+import { useContext } from 'react';
 import logo from '../../assets/svg/logo-no-background.svg';
+import { UserContext } from '../../Providers/AuthProvider/AuthProvider';
 
 const Footer = () => {
+    const { isToggled } = useContext( UserContext );
     return (
-        <div className='bg-neutral'>
-            <footer className="footer max-w-4xl mx-auto md:py-20 lg:py-32 p-10 text-neutral-content">
+        <div className={ `bg-neutral ${ isToggled && 'filter blur-sm transition-all duration-200' }` }>
+            <footer className="footer max-w-screen-2xl mx-auto md:py-20 lg:py-32 md:px-0 p-10 text-neutral-content">
                 <div>
                     <img src={ logo } className='w-40 md:w-64 lg:w-72 h-max box-content' alt="" />
                     <p>TimToys Inc.</p>

@@ -1,20 +1,45 @@
-import React, { createContext } from 'react';
-import Slider from './Slider';
-import SidebarLeft from './SidebarLeft';
-import CategoryTabs from './CategoryTabs';
+import { createContext, useContext, useEffect } from "react";
+import Banner from "./Banner";
+import Category from "./Category";
+import CategoryTabs from "./CategoryTabs";
+import Home_products from "./Home_products";
+import { scrollToTopOnRender } from "../../Utils";
+import { Toaster, toast } from "react-hot-toast";
+import Pinned_Blogs from "./Pinned_Blogs";
+import ImageGallery from "./ImageGallery";
+
+export const HomeContext = createContext();
 
 const Home = () => {
+
+    useEffect( () => {
+        scrollToTopOnRender();
+    }, [] );
+
+
+    const showToast = () => toast.error( 'Please login to view this content!' );
+
+    const props = {
+        showToast
+    };
+
     return (
-        <section className='grid md:grid-cols-5 relative'>
-            <div className='h-max sticky top-24 left-0'>
-                <SidebarLeft />
-            </div>
-            <div className='md:col-start-2 col-span-3'>
-                <Slider />
-                <div className="divider my-8"></div>
+        <HomeContext.Provider value={ props }>
+            <section>
+                <Banner />
+                <ImageGallery />
+                <Home_products />
+                <Category />
                 <CategoryTabs />
-            </div>
-        </section>
+                <Pinned_Blogs />
+                <Toaster
+                    position="top-center"
+                    toastOptions={ {
+                        duration: 2000
+                    } }
+                />
+            </section>
+        </HomeContext.Provider>
     );
 };
 

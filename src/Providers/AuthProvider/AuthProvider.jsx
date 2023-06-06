@@ -2,6 +2,7 @@ import {
     GithubAuthProvider,
     GoogleAuthProvider,
     createUserWithEmailAndPassword,
+    updateProfile,
     getAuth,
     onAuthStateChanged,
     signInWithEmailAndPassword,
@@ -10,14 +11,40 @@ import {
 } from 'firebase/auth';
 import { createContext, useEffect, useState } from 'react';
 import { app } from '../../Firebase/firebase.config';
+import { useTitle } from '../../Utils/useTitle';
 
 export const UserContext = createContext();
 const AuthProvider = ( { children } ) => {
 
     const auth = getAuth( app );
-    const [ user, setUser ] = useState( null );
-    const [ loading, setLoading ] = useState( false );
-    const [ activeLink, setActiveLink ] = useState( '' );
+    const [ user, setUser ] = useState();
+    const [ loading, setLoading ] = useState( true );
+    const [ activeLink, setActiveLink ] = useState( 'Home' );
+    const [ isToggled, setIsToggled ] = useState( false );
+    const [ openLoginPopUp, setOpenLoginPopUp ] = useState( false );
+    const [ detailsModalOpen, setDetailsModalOpen ] = useState( false );
+    const [ productForDetails, setProductForDetails ] = useState( null );
+
+    // ! Store (create a new user if user doesn't exist in the database) User To MongoDB
+    const storeProductInDB = async ( title, thumbnailImage, seller, description, price, listPrice, features, attributes, brand, manufacturerAttributes, category, quantity ) => {
+        try {
+            const response = await fetch( `${ import.meta.env.VITE_SERVERADDR }/products/add_product`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify( {
+                    uid,
+                    email
+                } )
+            } );
+            const data = await response.json();
+            console.log( data );
+        } catch ( error ) {
+            console.log( error );
+        }
+    };
+
 
     // ! Auth Contexts and stuffs
     const signIn = ( email, password ) => {
@@ -40,74 +67,65 @@ const AuthProvider = ( { children } ) => {
         return createUserWithEmailAndPassword( auth, email, password );
     };
 
+    const updateUserProfile = ( displayName, photoURL ) => {
+        setLoading( true );
+        return updateProfile( auth.currentUser, {
+            displayName,
+            photoURL
+        } );
+    };
+
     const logOut = () => {
         setLoading( true );
         return signOut( auth );
     };
 
-
-    // ! Products Contexts and stuffs
-    const [ products, setProducts ] = useState( null );
-    const [ category, setCategory ] = useState( null );
-    const [ categories, setCategories ] = useState( null );
-    const [ subCategories, setSubCategories ] = useState( [] );
-
-    const requestCategories = async ( category ) => {
+    const requestAccessToken = async ( uid ) => {
         try {
-            const response = await fetch( `https://tim-toys-server.vercel.app/categories` );
+            const response = await fetch( `${ import.meta.env.VITE_SERVERADDR }/auth/request_access_token`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify( { uid } )
+            } );
             const data = await response.json();
-            setCategories( data );
-        } catch ( error ) {
+            localStorage.setItem( 'jwt-access-token', data.token );
+        }
+        catch ( error ) {
             console.log( error );
         }
     };
-    const requestSubCategories = async ( category ) => {
-        try {
-            const response = await fetch( `https://tim-toys-server.vercel.app/sub_categories?category=${ encodeURIComponent( category ) }` );
-            const data = await response.json();
-            setSubCategories( data );
-        } catch ( error ) {
-            console.log( error );
-        }
-    };
-
-    const requestProductsByCategory = async ( category ) => {
-        try {
-            const response = await fetch( `https://tim-toys-server.vercel.app/products/filter_by_category?category=${ encodeURIComponent( category ) }` );
-            const data = await response.json();
-            setProducts( data );
-        } catch ( error ) {
-            console.log( error );
-        }
-    };
-
-    useEffect( () => {
-        requestCategories();
-        requestSubCategories( category );
-        requestProductsByCategory( category );
-    }, [ category ] );
-
 
     const props = {
         user,
         setUser,
         signIn,
         signUp,
+        updateUserProfile,
         logOut,
         signInWithGoogle,
         signInWithGithub,
+        requestAccessToken,
         loading,
         setLoading,
         activeLink,
         setActiveLink,
-        requestSubCategories,
-        requestProductsByCategory,
-        products,
-        subCategories,
-        category,
-        setCategory,
-        categories,
+        storeProductInDB,
+        setIsToggled,
+        isToggled,
+        openLoginPopUp,
+        setOpenLoginPopUp,
+        detailsModalOpen,
+        setDetailsModalOpen,
+        productForDetails,
+        setProductForDetails
     };
+
+    useEffect( () => {
+        useTitle( activeLink );
+    }, [ activeLink ] );
+
 
     useEffect( () => {
         const unsubscribe = onAuthStateChanged( auth, currentUser => {
