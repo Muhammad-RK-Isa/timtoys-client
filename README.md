@@ -6,9 +6,6 @@ TimToys is a toy marketplace e-commerce website built using React, MongoDB, Expr
 - [Features](#features)
 - [Technologies](#technologies)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
